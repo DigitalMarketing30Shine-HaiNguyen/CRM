@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLAN CRM SMS T5/2026 — 30Shine</title>
+<style>
+  :root {
+    --blue-dark: #1F3864; --blue-mid: #2E74B5; --blue-light: #D6E4F0;
+    --green-dark: #375623; --green-mid: #4E7741; --green-light: #E2EFDA;
+    --orange-dark: #843C0C; --orange-light: #FCE4D6;
+    --yellow-pale: #FFF2CC; --purple-pale: #EAD1DC;
+    --gray-dark: #404040; --gray-light: #F2F2F2;
+    --red: #C00000; --gold: #C9A227;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; background: #F5F7FA; color: #222; font-size: 13px; }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    color: white; padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-header h1 { font-size: 20px; font-weight: 700; }
+  .page-header .sub { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+  .badge { background: rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 10px; font-size: 11px; margin-left: 10px; }
+
+  .container { padding: 20px 24px; max-width: 1600px; margin: 0 auto; }
+
+  /* KPI bar */
+  .kpi-bar { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-bottom: 20px; }
+  .kpi-card { background: white; border-radius: 8px; padding: 12px 10px; text-align: center;
+              box-shadow: 0 1px 6px rgba(0,0,0,.08); border-top: 3px solid var(--blue-mid); }
+  .kpi-card.green { border-top-color: var(--green-mid); }
+  .kpi-card.orange { border-top-color: #E8712A; }
+  .kpi-card.gold { border-top-color: var(--gold); }
+  .kpi-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px; }
+  .kpi-val { font-size: 18px; font-weight: 700; color: var(--blue-dark); }
+  .kpi-val.green { color: var(--green-dark); }
+  .kpi-val.orange { color: var(--orange-dark); }
+
+  /* Section headers */
+  .section { background: white; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 8px rgba(0,0,0,.07); overflow: hidden; }
+  .section-hdr { padding: 10px 18px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .section-hdr.blue { background: var(--blue-dark); color: white; }
+  .section-hdr.green { background: var(--green-dark); color: white; }
+  .section-hdr.gray { background: var(--gray-dark); color: white; }
+  .section-body { padding: 16px 18px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: var(--gray-dark); color: white; padding: 8px 8px; text-align: center; font-weight: 600; font-size: 11px; }
+  td { padding: 7px 8px; border-bottom: 1px solid #E8E8E8; vertical-align: middle; }
+  tr:hover td { background: #F0F4FF !important; }
+  .row-blue td { background: var(--blue-light); }
+  .row-white td { background: white; }
+  .row-green td { background: var(--green-light); }
+  .row-orange td { background: var(--orange-light); }
+  .row-purple td { background: var(--purple-pale); }
+  .row-yellow td { background: var(--yellow-pale); }
+  .subtotal td { background: var(--blue-dark) !important; color: white; font-weight: 700; }
+  .grand-total td { background: var(--gray-dark) !important; color: white; font-weight: 700; }
+  .luong-hdr td { background: var(--blue-dark) !important; color: white; font-weight: 700; font-size: 12px; }
+  .luong-hdr-b td { background: var(--green-dark) !important; color: white; font-weight: 700; font-size: 12px; }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+  .tag-green { background: #D4EDDA; color: #155724; }
+  .tag-orange { background: #FCE4D6; color: #843C0C; }
+  .tag-red { background: #FFE0E0; color: var(--red); }
+  .tag-blue { background: var(--blue-light); color: var(--blue-dark); }
+  .tag-purple { background: var(--purple-pale); color: #5C0E6C; }
+  .tag-gold { background: #FFF2CC; color: #7F6000; }
+
+  .km-nokm { color: var(--green-dark); font-weight: 600; }
+  .km-km20 { color: #7F6000; font-weight: 700; }
+  .km-km30 { color: var(--red); font-weight: 700; }
+  .star { color: var(--gold); }
+
+  /* Calendar */
+  .cal-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .cal-table th { background: var(--gray-dark); color: white; padding: 5px 3px; text-align: center; font-size: 10px; }
+  .cal-table td { padding: 4px 2px; border: 1px solid #DDD; text-align: center; font-size: 10px; min-width: 28px; }
+  .cal-send { background: #1F8B4C; color: white; border-radius: 3px; font-weight: 700; padding: 1px 3px; font-size: 9px; }
+  .cal-prep { background: #FFF2CC; color: #7F6000; border-radius: 3px; font-size: 9px; padding: 1px 3px; }
+  .cal-sun { background: #EEE; color: #888; }
+  .cal-seg { font-weight: 600; font-size: 11px; text-align: left; padding-left: 6px; }
+
+  /* Phase timeline */
+  .phase-timeline { display: flex; gap: 10px; margin-bottom: 20px; }
+  .phase-card { flex: 1; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.09); }
+  .phase-card .ph-head { padding: 8px 12px; font-weight: 700; font-size: 12px; color: white; }
+  .phase-card .ph-body { background: white; padding: 10px 12px; font-size: 11px; }
+  .phase-card .ph-body .tep-item { margin-bottom: 5px; padding: 3px 6px; border-radius: 4px; font-size: 11px; }
+  .ph1 .ph-head { background: #2E74B5; }
+  .ph2 .ph-head { background: #375623; }
+  .ph3 .ph-head { background: #C9A227; }
+  .ph4 .ph-head { background: #2E74B5; }
+  .ph5 .ph-head { background: #843C0C; }
+  .ph-meta { font-size: 10px; opacity: .8; }
+  .ph-kpi { display: flex; gap: 6px; margin-top: 6px; }
+  .ph-kpi-item { flex: 1; background: #F5F5F5; border-radius: 4px; padding: 4px; text-align: center; }
+  .ph-kpi-item .v { font-weight: 700; font-size: 13px; }
+  .ph-kpi-item .l { font-size: 9px; color: #666; }
+
+  /* Responsive */
+  @media (max-width:1200px) { .kpi-bar { grid-template-columns: repeat(4,1fr); } .phase-timeline { flex-wrap: wrap; } .phase-card { min-width: 180px; } }
+
+  /* KM Policy box */
+  .km-policy { background: white; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+               box-shadow: 0 1px 8px rgba(0,0,0,.07); border-left: 4px solid var(--blue-mid); }
+  .km-policy h3 { color: var(--blue-dark); margin-bottom: 10px; font-size: 13px; }
+  .km-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .km-item { background: #F8F9FA; border-radius: 6px; padding: 10px 14px; min-width: 200px; flex: 1; }
+  .km-item .km-ti { font-weight: 700; font-size: 12px; margin-bottom: 4px; }
+  .km-item .km-reason { font-size: 11px; color: #555; }
+  .km-item.nokm { border-left: 3px solid var(--green-mid); }
+  .km-item.km20 { border-left: 3px solid var(--gold); }
+  .km-item.km30 { border-left: 3px solid var(--red); }
+
+  .footnote { font-size: 11px; color: #777; padding: 10px 0; }
+  .highlight { background: #FFFDE7; border-left: 3px solid var(--gold); padding: 8px 12px; border-radius: 4px; margin: 8px 0; font-size: 12px; }
+
+  .gen-time { font-size: 10px; color: rgba(255,255,255,0.6); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>🗓 KẾ HOẠCH CRM SMS — T5/2026 <span class="badge">V1 Draft</span></h1>
+    <div class="sub">Focus: F1 + >12W Win-back &nbsp;·&nbsp; 5 Phases (07/05–27/05) &nbsp;·&nbsp; 8 Tệp &nbsp;·&nbsp; Budget: 160M đ &nbsp;·&nbsp; SMS cost: ~300đ/tin</div>
+  </div>
+  <div class="gen-time">Generated: 2026-05-05<br>Recency: tính đến 05/05/2026</div>
+</div>
+
+<div class="container">
+
+<!-- KPI BAR -->
+<div class="kpi-bar">
+  <div class="kpi-card"><div class="kpi-label">Budget</div><div class="kpi-val">160M</div></div>
+  <div class="kpi-card"><div class="kpi-label">SMS Cost (est.)</div><div class="kpi-val orange">~78M</div></div>
+  <div class="kpi-card orange"><div class="kpi-label">KM Cost (est.)</div><div class="kpi-val orange">~80M</div></div>
+  <div class="kpi-card gold"><div class="kpi-label">Tổng chi (est.)</div><div class="kpi-val">~158M</div></div>
+  <div class="kpi-card"><div class="kpi-label">Tổng Sends</div><div class="kpi-val">~260k</div></div>
+  <div class="kpi-card green"><div class="kpi-label">KH QL Forecast</div><div class="kpi-val green">~16k</div></div>
+  <div class="kpi-card green"><div class="kpi-label">Revenue (est.)</div><div class="kpi-val green">~4.1 tỷ</div></div>
+  <div class="kpi-card green"><div class="kpi-label">Net GP45% (est.)</div><div class="kpi-val green">~1,710M</div></div>
+</div>
+
+<!-- PHASE TIMELINE -->
+<div class="phase-timeline">
+  <div class="phase-card ph1">
+    <div class="ph-head">🚀 Phase 1 — 07/05 (T5)<div class="ph-meta">Mở màn bằng tệp >12W mạnh nhất</div></div>
+    <div class="ph-body">
+      <div class="tep-item" style="background:#E2EFDA">⭐ F2 12-24W — 18k (no KM)</div>
+      <div class="tep-item" style="background:#F2F2F2">F2 24-48W — 22k (KM 20k)</div>
+      <div class="tep-item" style="background:#E2EFDA">F3 Chain3+ — 3.5k (no KM)</div>
+      <div class="ph-kpi">
+        <div class="ph-kpi-item"><div class="v">43.5k</div><div class="l">Sends</div></div>
+        <div class="ph-kpi-item"><div class="v">13.1M</div><div class="l">SMS cost</div></div>
+        <div class="ph-kpi-item"><div class="v">~3.5k</div><div class="l">KH QL</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase-card ph2">
+    <div class="ph-head">🎯 Phase 2 — 12/05 (T3)<div class="ph-meta">F1 core — timing filter</div></div>
+    <div class="ph-body">
+      <div class="tep-item" style="background:#D6E4F0">F1 Timing Best — 35k (no KM)</div>
+      <div class="tep-item" style="background:#E2EFDA">F1 Weekend — 20k (no KM)</div>
+      <div class="ph-kpi">
+        <div class="ph-kpi-item"><div class="v">55k</div><div class="l">Sends</div></div>
+        <div class="ph-kpi-item"><div class="v">16.5M</div><div class="l">SMS cost</div></div>
+        <div class="ph-kpi-item"><div class="v">~2.8k</div><div class="l">KH QL</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase-card ph3">
+    <div class="ph-head">📦 Phase 3 — 15/05 (T6)<div class="ph-meta">F2 round 2 + F1 Weekday</div></div>
+    <div class="ph-body">
+      <div class="tep-item" style="background:#FFF2CC">F2 24-48W round2 — 22k (KM 20k)</div>
+      <div class="tep-item" style="background:#D6E4F0">F1 Weekday — 35k (no KM)</div>
+      <div class="ph-kpi">
+        <div class="ph-kpi-item"><div class="v">57k</div><div class="l">Sends</div></div>
+        <div class="ph-kpi-item"><div class="v">17.1M</div><div class="l">SMS cost</div></div>
+        <div class="ph-kpi-item"><div class="v">~3.2k</div><div class="l">KH QL</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase-card ph4">
+    <div class="ph-head">🔄 Phase 4 — 21/05 (T5)<div class="ph-meta">Second wave F1 + F2 STAR</div></div>
+    <div class="ph-body">
+      <div class="tep-item" style="background:#D6E4F0">F1 Timing Best fresh — 35k (no KM)</div>
+      <div class="tep-item" style="background:#E2EFDA">⭐ F2 12-24W fresh — 18k (no KM)</div>
+      <div class="tep-item" style="background:#E2EFDA">F3 Chain3+ — 3.5k (no KM)</div>
+      <div class="ph-kpi">
+        <div class="ph-kpi-item"><div class="v">56.5k</div><div class="l">Sends</div></div>
+        <div class="ph-kpi-item"><div class="v">17.0M</div><div class="l">SMS cost</div></div>
+        <div class="ph-kpi-item"><div class="v">~4.2k</div><div class="l">KH QL</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase-card ph5">
+    <div class="ph-head">🏁 Phase 5 — 27/05 (T4) LAST<div class="ph-meta">Final push + test cold segments</div></div>
+    <div class="ph-body">
+      <div class="tep-item" style="background:#D6E4F0">F1 Weekday fresh — 35k (no KM)</div>
+      <div class="tep-item" style="background:#EAD1DC">F2 48W+ — 5k (KM 30k) TEST</div>
+      <div class="tep-item" style="background:#FCE4D6">F1 Cold 24-36W — 8k (KM 20k) TEST</div>
+      <div class="ph-kpi">
+        <div class="ph-kpi-item"><div class="v">48k</div><div class="l">Sends</div></div>
+        <div class="ph-kpi-item"><div class="v">14.4M</div><div class="l">SMS cost</div></div>
+        <div class="ph-kpi-item"><div class="v">~2.2k</div><div class="l">KH QL</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KM POLICY -->
+<div class="km-policy">
+  <h3>💡 KM Policy T5 — Đề xuất phân tầng theo độ khó quay lại</h3>
+  <div class="km-row">
+    <div class="km-item nokm">
+      <div class="km-ti km-nokm">✅ Không KM — F1 + F2 12-24W + F3</div>
+      <div class="km-reason">T4 chứng minh uplift tự nhiên ≥5pp không cần KM:<br>
+      F1 Timing Best: +17-28pp | F2 12-24W: +14pp | F3: +22pp<br>
+      <b>Tiết kiệm ~100M KM cost, giữ margin cao nhất</b></div>
+    </div>
+    <div class="km-item km20">
+      <div class="km-ti km-km20">🟡 KM 20k — F2 24-48W (Trung bình)</div>
+      <div class="km-reason">T4 F2 24-48W no KM: +6.9pp (đủ dùng nhưng borderline)<br>
+      KM 20k = boost thêm 1-2pp để vượt ngưỡng tâm lý KH<br>
+      <b>Chỉ tốn thêm ~30M KM cho 2 rounds bắn</b></div>
+    </div>
+    <div class="km-item km30">
+      <div class="km-ti km-km30">🔴 KM 30k — F2 48W+ Cold (Test mẫu)</div>
+      <div class="km-reason">Drift >1 năm, chưa test T4. KM 30k là offer win-back mạnh nhất<br>
+      Chỉ bắn 5k để đo uplift thực, không scale blind<br>
+      <b>Target ≥3pp — nếu pass sẽ scale tháng 6</b></div>
+    </div>
+    <div class="km-item km20">
+      <div class="km-ti km-km20">🟡 KM 20k — F1 Cold 24-36W (Test mẫu)</div>
+      <div class="km-reason">F1 không timing filter: T4 chỉ +1.9pp (thất bại)<br>
+      KM 20k kỳ vọng đẩy lên ≥3pp. Test 8k trước khi quyết định<br>
+      <b>Nếu không pass → bỏ tệp này, tập trung Timing Best</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- LUỒNG A TABLE -->
+<div class="section">
+  <div class="section-hdr blue">🟦 LUỒNG A — F1 → F2 &nbsp;|&nbsp; Mục tiêu: 60% target (~9,600 KH) &nbsp;|&nbsp; Baseline: F=1 lần, chưa quay lần 2</div>
+  <div class="section-body" style="padding:0">
+    <table>
+      <tr>
+        <th>STT</th><th>Tệp</th><th>Đặc điểm KH</th><th>Phase bắn</th>
+        <th>Offer / Content</th><th>KM</th><th>n Pool est.</th>
+        <th>Target Uplift</th><th>T4 Actual Uplift</th><th>KH QL est.</th>
+        <th>SMS Cost</th><th>Net GP45%</th><th>Trạng thái</th>
+      </tr>
+      <tr class="luong-hdr"><td colspan="13">🟦 LUỒNG A — CHUYỂN ĐỔI F1 → F2</td></tr>
+      <tr class="row-blue">
+        <td style="text-align:center;font-weight:700">1</td>
+        <td><b>F1 – Timing Best</b><br><span style="font-size:10px;color:#666">12-28W · Filter khung giờ</span></td>
+        <td>F=1 lần<br>Recency 12-28W<br>Bắn đúng giờ quen</td>
+        <td>P2: 12/05<br>P4: 21/05</td>
+        <td style="font-size:11px">SMS cá nhân hóa timing<br><i>'Đúng khung giờ anh hay ghé — slot đang trống!'</i></td>
+        <td class="km-nokm">Không KM</td>
+        <td style="text-align:center">~35,000 × 2</td>
+        <td style="text-align:center"><span class="tag tag-blue">≥5pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+17–28pp ✅</span></td>
+        <td style="text-align:center;font-weight:700">~3,850</td>
+        <td style="text-align:center">21.0M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+428M</td>
+        <td><span class="tag tag-green">Scale ngay</span></td>
+      </tr>
+      <tr class="row-white">
+        <td style="text-align:center;font-weight:700">2</td>
+        <td><b>F1 – Weekend</b><br><span style="font-size:10px;color:#666">12-28W · Visit history T7/CN</span></td>
+        <td>F=1 lần<br>Recency 12-28W<br>Hay ghé cuối tuần</td>
+        <td>P2: 12/05</td>
+        <td style="font-size:11px">SMS timing cuối tuần<br><i>'Cuối tuần xả hơi — ghế VIP đang chờ!'</i></td>
+        <td class="km-nokm">Không KM</td>
+        <td style="text-align:center">~20,000</td>
+        <td style="text-align:center"><span class="tag tag-blue">≥4pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+6.9pp ✅</span></td>
+        <td style="text-align:center;font-weight:700">~900</td>
+        <td style="text-align:center">6.0M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+99M</td>
+        <td><span class="tag tag-green">Scale ngay</span></td>
+      </tr>
+      <tr class="row-blue">
+        <td style="text-align:center;font-weight:700">3</td>
+        <td><b>F1 – Weekday</b><br><span style="font-size:10px;color:#666">12-28W · Visit history T2-T6</span></td>
+        <td>F=1 lần<br>Recency 12-28W<br>Hay ghé ngày thường</td>
+        <td>P3: 15/05<br>P5: 27/05</td>
+        <td style="font-size:11px">SMS nhắc slot ngày thường<br><i>'Slot vàng giờ hay ghé đang trống — book ngay!'</i></td>
+        <td class="km-nokm">Không KM</td>
+        <td style="text-align:center">~35,000 × 2</td>
+        <td style="text-align:center"><span class="tag tag-blue">≥3.5pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+4.8pp ✅</span></td>
+        <td style="text-align:center;font-weight:700">~2,800</td>
+        <td style="text-align:center">21.0M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+296M</td>
+        <td><span class="tag tag-green">Scale ngay</span></td>
+      </tr>
+      <tr class="row-orange">
+        <td style="text-align:center;font-weight:700">4</td>
+        <td><b>F1 Cold 24-36W</b><br><span style="font-size:10px;color:var(--red)">KHÓ QUAY — KM 20k</span></td>
+        <td>F=1 lần<br>Recency 24-36W<br>Không timing filter</td>
+        <td>P5: 27/05<br><i>Test mẫu 8k</i></td>
+        <td style="font-size:11px">SMS + Giảm 20k lần ghé tiếp<br><i>'Lâu rồi! Ghé lại hôm nay được giảm 20k!'</i></td>
+        <td class="km-km20">KM 20k 🟡</td>
+        <td style="text-align:center">~8,000 (test)</td>
+        <td style="text-align:center"><span class="tag tag-gold">≥3pp</span></td>
+        <td style="text-align:center"><span style="color:var(--red);font-weight:700">~2pp (F1 Full)</span></td>
+        <td style="text-align:center;font-weight:700">~240</td>
+        <td style="text-align:center">2.4M</td>
+        <td style="text-align:center;color:var(--green-dark)">+19M</td>
+        <td><span class="tag tag-orange">Test mẫu</span></td>
+      </tr>
+      <tr class="subtotal"><td colspan="6">SUBTOTAL LUỒNG A (4 tệp)</td><td>~133,000</td><td>—</td><td>—</td><td style="font-weight:700">~7,790</td><td>~50.4M</td><td style="font-weight:700">+842M</td><td>—</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- LUỒNG B TABLE -->
+<div class="section">
+  <div class="section-hdr green">🟩 LUỒNG B — >12W WIN-BACK &nbsp;|&nbsp; Mục tiêu: 40% target (~6,400 KH) &nbsp;|&nbsp; F2/F3 drift ≥12 tuần</div>
+  <div class="section-body" style="padding:0">
+    <table>
+      <tr>
+        <th>STT</th><th>Tệp</th><th>Đặc điểm KH</th><th>Phase bắn</th>
+        <th>Offer / Content</th><th>KM</th><th>n Pool est.</th>
+        <th>Target Uplift</th><th>T4 Actual Uplift</th><th>KH QL est.</th>
+        <th>SMS Cost</th><th>Net GP45%</th><th>Trạng thái</th>
+      </tr>
+      <tr class="luong-hdr-b"><td colspan="13">🟩 LUỒNG B — KÍCH HOẠT LẠI >12W</td></tr>
+      <tr class="row-green">
+        <td style="text-align:center;font-weight:700">5</td>
+        <td><b>F2 12-24W ⭐</b><br><span style="font-size:10px;color:var(--green-dark)">TepF1 — STAR T4</span></td>
+        <td>F≥2 lần<br>Recency 12-24W<br>"Vùng vàng" win-back</td>
+        <td>P1: 07/05<br>P4: 21/05</td>
+        <td style="font-size:11px">SMS cá nhân hóa + DV yêu thích<br><i>'Tụi em vẫn nhớ anh hay làm [DV] — slot sáng mai mở!'</i></td>
+        <td class="km-nokm">Không KM</td>
+        <td style="text-align:center">~18,000 × 2</td>
+        <td style="text-align:center"><span class="tag tag-green">≥8pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+14.1pp ⭐</span></td>
+        <td style="text-align:center;font-weight:700">~3,240</td>
+        <td style="text-align:center">10.8M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+379M</td>
+        <td><span class="tag tag-green">Scale ngay</span></td>
+      </tr>
+      <tr class="row-white">
+        <td style="text-align:center;font-weight:700">6</td>
+        <td><b>F2 24-48W</b><br><span style="font-size:10px;color:#7F6000">KM 20k — Boost</span></td>
+        <td>F≥2 lần<br>Recency 24-48W<br>Drift xa hơn</td>
+        <td>P1: 07/05<br>P3: 15/05</td>
+        <td style="font-size:11px">SMS + ShineCombo giảm 20k<br><i>'Combo cắt+gội chỉ còn [giá-20k] — hết tháng 5!'</i></td>
+        <td class="km-km20">KM 20k 🟡</td>
+        <td style="text-align:center">~22,000 × 2</td>
+        <td style="text-align:center"><span class="tag tag-gold">≥7pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+6.9pp (no KM)</span></td>
+        <td style="text-align:center;font-weight:700">~3,520</td>
+        <td style="text-align:center">13.2M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+263M</td>
+        <td><span class="tag tag-gold">Scale có ĐK</span></td>
+      </tr>
+      <tr class="row-green">
+        <td style="text-align:center;font-weight:700">7</td>
+        <td><b>F3 Chain3+ 8-12W</b><br><span style="font-size:10px;color:var(--green-dark)">Trung thành cao</span></td>
+        <td>F≥3 lần<br>Recency 8-12W<br>KH trung thành</td>
+        <td>P1: 07/05<br>P4: 21/05</td>
+        <td style="font-size:11px">SMS gợi thói quen chuỗi<br><i>'Anh vẫn là khách ruột — ghế VIP sẵn sàng!'</i></td>
+        <td class="km-nokm">Không KM</td>
+        <td style="text-align:center">~3,500 × 2</td>
+        <td style="text-align:center"><span class="tag tag-green">≥15pp</span></td>
+        <td style="text-align:center"><span class="tag tag-green">+22.6pp ⭐</span></td>
+        <td style="text-align:center;font-weight:700">~1,260</td>
+        <td style="text-align:center">2.1M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+154M</td>
+        <td><span class="tag tag-green">Scale ngay</span></td>
+      </tr>
+      <tr class="row-purple">
+        <td style="text-align:center;font-weight:700">8</td>
+        <td><b>F2 48W+ Cold</b><br><span style="font-size:10px;color:var(--red)">KHÓ NHẤT — KM 30k</span></td>
+        <td>F≥2 lần<br>Recency &gt;48W (~1 năm)<br>Drift sâu nhất</td>
+        <td>P5: 27/05<br><i>Test mẫu 5k</i></td>
+        <td style="font-size:11px">SMS + ShineCombo giảm 30k<br><i>'Đã lâu rồi — ưu đãi 30k riêng cho anh, hết tháng 5!'</i></td>
+        <td class="km-km30">KM 30k 🔴</td>
+        <td style="text-align:center">~5,000 (test)</td>
+        <td style="text-align:center"><span class="tag tag-orange">≥3pp</span></td>
+        <td style="text-align:center"><span style="color:#888">Chưa test T4</span></td>
+        <td style="text-align:center;font-weight:700">~150</td>
+        <td style="text-align:center">1.5M</td>
+        <td style="text-align:center;color:var(--green-dark)">+34M</td>
+        <td><span class="tag tag-orange">Test mẫu</span></td>
+      </tr>
+      <tr class="subtotal"><td colspan="6">SUBTOTAL LUỒNG B (4 tệp)</td><td>~93,000</td><td>—</td><td>—</td><td style="font-weight:700">~8,170</td><td>~27.6M</td><td style="font-weight:700">+830M</td><td>—</td></tr>
+      <tr class="grand-total"><td colspan="5">TỔNG — 8 tệp / 5 phases</td><td>—</td><td>~260,000 sends</td><td>—</td><td>—</td><td style="font-weight:700">~15,960 KH</td><td>~78M SMS + ~80M KM</td><td style="font-weight:700">+1,710M</td><td>99% budget dùng</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="section">
+  <div class="section-hdr gray">📅 LỊCH BẮN CHI TIẾT — THÁNG 5/2026 (Bắt đầu 07/05 → Kết thúc 27/05)</div>
+  <div class="section-body" style="overflow-x:auto; padding: 0">
+    <table class="cal-table">
+      <tr>
+        <th style="min-width:140px;text-align:left;padding-left:8px">Tệp</th>
+        <th>n</th><th>KM</th>
+        <th>1<br>T6</th><th>2<br>T7</th><th>3<br>CN</th><th>4<br>T2</th><th>5<br>T3</th>
+        <th style="background:#1F8B4C">7<br>T5🚩</th>
+        <th>8<br>T6</th><th>9<br>T7</th><th>10<br>CN</th><th>11<br>T2</th>
+        <th style="background:#1F8B4C">12<br>T3🚩</th>
+        <th>13<br>T4</th>
+        <th style="background:#1F8B4C">15<br>T6🚩</th>
+        <th>16<br>T7</th><th>17<br>CN</th><th>18<br>T2</th><th>19<br>T3</th>
+        <th style="background:#1F8B4C">21<br>T5🚩</th>
+        <th>22<br>T6</th><th>23<br>T7</th><th>24<br>CN</th><th>25<br>T2</th><th>26<br>T3</th>
+        <th style="background:#843C0C">27<br>T4🏁</th>
+        <th>28<br>T5</th><th>29<br>T6</th><th>30<br>T7</th><th>31<br>CN</th>
+      </tr>
+      <tr>
+        <td class="cal-seg" style="background:#D6E4F0">F1 – Timing Best</td>
+        <td style="background:#D6E4F0">35k</td><td style="background:#D6E4F0" class="km-nokm">—</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td><span class="cal-prep">📝</span></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P4</span></td>
+        <td><span class="cal-send">🟢P4</span></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr>
+        <td class="cal-seg" style="background:#D6E4F0">  └ Phase 2: 12/05</td>
+        <td style="background:#D6E4F0"></td><td style="background:#D6E4F0"></td>
+        <td></td><td></td><td class="cal-sun"></td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun"></td><td><span class="cal-prep">📝P2</span></td>
+        <td><span class="cal-send">🟢P2</span></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun"></td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun"></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun"></td>
+      </tr>
+      <tr style="background:#F5F5F5">
+        <td class="cal-seg">F1 – Weekend</td>
+        <td>20k</td><td class="km-nokm">—</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun">☀</td><td><span class="cal-prep">📝</span></td>
+        <td><span class="cal-send">🟢P2</span></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#D6E4F0">
+        <td class="cal-seg">F1 – Weekday</td>
+        <td>35k×2</td><td class="km-nokm">—</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td><span class="cal-prep">📝P3</span></td>
+        <td><span class="cal-send">🟢P3</span></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td><span class="cal-prep">📝P5</span></td>
+        <td><span class="cal-send">🟢P5</span></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#FCE4D6">
+        <td class="cal-seg">F1 Cold 24-36W <span style="color:var(--red)">[KM20k]</span></td>
+        <td>8k</td><td class="km-km20">20k</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td><span class="cal-prep">📝P5</span></td>
+        <td><span class="cal-send">🟢P5</span></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#E2EFDA">
+        <td class="cal-seg">⭐ F2 12-24W (TepF1)</td>
+        <td>18k×2</td><td class="km-nokm">—</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P1</span></td><td><span class="cal-send">🟢P1</span></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P4</span></td>
+        <td><span class="cal-send">🟢P4</span></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#FFF2CC">
+        <td class="cal-seg">F2 24-48W (TepF2) <span style="color:#7F6000">[KM20k]</span></td>
+        <td>22k×2</td><td class="km-km20">20k</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P1</span></td><td><span class="cal-send">🟢P1</span></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td><span class="cal-prep">📝P3</span></td>
+        <td><span class="cal-send">🟢P3</span></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#E2EFDA">
+        <td class="cal-seg">F3 Chain3+ 8-12W</td>
+        <td>3.5k×2</td><td class="km-nokm">—</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P1</span></td><td><span class="cal-send">🟢P1</span></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td><span class="cal-prep">📝P4</span></td>
+        <td><span class="cal-send">🟢P4</span></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+      <tr style="background:#EAD1DC">
+        <td class="cal-seg">F2 48W+ Cold <span style="color:var(--red)">[KM30k TEST]</span></td>
+        <td>5k</td><td class="km-km30">30k</td>
+        <td></td><td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td><td></td><td></td><td class="cal-sun">☀</td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td><td class="cal-sun">☀</td><td></td><td><span class="cal-prep">📝P5</span></td>
+        <td><span class="cal-send">🟢P5</span></td><td></td><td></td><td></td><td class="cal-sun">☀</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- Budget breakdown -->
+<div class="section">
+  <div class="section-hdr gray">💰 PHÂN BỔ BUDGET PER PHASE</div>
+  <div class="section-body" style="padding:0">
+    <table>
+      <tr>
+        <th>Phase</th><th>Ngày bắn</th><th>Tệp bắn</th>
+        <th>Sends</th><th>SMS Cost</th><th>KM Cost (est.)</th><th>Tổng Chi Phí</th>
+        <th>KH QL est.</th><th>Revenue (tr)</th><th>Net GP45% (tr)</th>
+      </tr>
+      <tr class="row-blue">
+        <td style="font-weight:700">Phase 1</td><td>07/05 — T5</td>
+        <td>F2 12-24W + F2 24-48W + F3 Chain3+</td>
+        <td style="text-align:center">43,500</td><td style="text-align:center">13.1M</td>
+        <td style="text-align:center">35.2M</td><td style="text-align:center;font-weight:700">48.3M</td>
+        <td style="text-align:center">~3,500</td><td style="text-align:center">910M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+361M</td>
+      </tr>
+      <tr class="row-green">
+        <td style="font-weight:700">Phase 2</td><td>12/05 — T3</td>
+        <td>F1 Timing Best + F1 Weekend</td>
+        <td style="text-align:center">55,000</td><td style="text-align:center">16.5M</td>
+        <td style="text-align:center">—</td><td style="text-align:center;font-weight:700">16.5M</td>
+        <td style="text-align:center">~2,825</td><td style="text-align:center">735M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+314M</td>
+      </tr>
+      <tr class="row-yellow">
+        <td style="font-weight:700">Phase 3</td><td>15/05 — T6</td>
+        <td>F2 24-48W round2 + F1 Weekday</td>
+        <td style="text-align:center">57,000</td><td style="text-align:center">17.1M</td>
+        <td style="text-align:center">35.2M</td><td style="text-align:center;font-weight:700">52.3M</td>
+        <td style="text-align:center">~3,160</td><td style="text-align:center">822M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+282M</td>
+      </tr>
+      <tr class="row-blue">
+        <td style="font-weight:700">Phase 4</td><td>21/05 — T5</td>
+        <td>F1 Timing Best fresh + F2 12-24W fresh + F3</td>
+        <td style="text-align:center">56,500</td><td style="text-align:center">17.0M</td>
+        <td style="text-align:center">—</td><td style="text-align:center;font-weight:700">17.0M</td>
+        <td style="text-align:center">~4,155</td><td style="text-align:center">1,080M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+469M</td>
+      </tr>
+      <tr class="row-orange">
+        <td style="font-weight:700">Phase 5 🏁</td><td>27/05 — T4</td>
+        <td>F1 Weekday fresh + F2 48W+ (test) + F1 Cold (test)</td>
+        <td style="text-align:center">48,000</td><td style="text-align:center">14.4M</td>
+        <td style="text-align:center">9.3M</td><td style="text-align:center;font-weight:700">23.7M</td>
+        <td style="text-align:center">~2,320</td><td style="text-align:center">603M</td>
+        <td style="text-align:center;color:var(--green-dark);font-weight:700">+282M</td>
+      </tr>
+      <tr class="grand-total">
+        <td>TỔNG</td><td>5 phases</td><td>8 tệp</td>
+        <td style="text-align:center">260,000</td><td style="text-align:center">78.0M</td>
+        <td style="text-align:center">~79.7M</td><td style="text-align:center;font-weight:700">~157.7M / 160M (99%)</td>
+        <td style="text-align:center;font-weight:700">~15,960</td><td style="text-align:center;font-weight:700">4,150M</td>
+        <td style="text-align:center;font-weight:700">+1,710M</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="highlight">
+  ⚠️ <b>Lưu ý quan trọng:</b> Pool sizes là ước tính từ T4 data. Cần file segment mới (recency tính đến 05/05/2026) để tính pool chính xác. Dedup rule: loại toàn bộ KH đã quay lại trong T4 (tính đến 03/05). Revenue forecast = total KH QL × AOV 260k — KHÔNG phải incremental thuần.
+</div>
+
+<div class="footnote" style="padding-bottom:24px">
+  Generated: 2026-05-05 &nbsp;·&nbsp; PLAN CRM SMS T5/2026 V1 Draft &nbsp;·&nbsp; 30Shine CRM Team &nbsp;·&nbsp; Recency calculated as of 05/05/2026
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
+<script>
+  var pass = prompt("Nhập mật khẩu:");
+  if (pass !== "hainguyen401") {
+    document.body.innerHTML = "<h2>Sai mật khẩu!</h2>";
+  }
+</script>

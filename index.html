@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>PLAN CRM T5/2026 V3 Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#222;font-size:13px;}
+.page{max-width:1240px;margin:0 auto;padding:24px;}
+.header{background:linear-gradient(135deg,#1F4E79 0%,#2e75b6 100%);color:white;border-radius:12px;padding:28px 36px;margin-bottom:20px;}
+.header h1{font-size:21px;font-weight:700;}
+.header .sub{font-size:12px;opacity:.85;margin-top:5px;}
+.header .meta{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;}
+.header .mi{background:rgba(255,255,255,.15);border-radius:8px;padding:10px 18px;}
+.header .mv{font-size:19px;font-weight:700;}
+.header .ml{font-size:11px;opacity:.8;margin-top:2px;}
+.stitle{font-size:15px;font-weight:700;color:#1F4E79;border-left:4px solid #2e75b6;padding-left:12px;margin:24px 0 12px;}
+.v2note{background:#fff3cd;border:1.5px solid #ffc107;border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#7d4e00;font-weight:600;}
+.km-rule-box{background:white;border-radius:10px;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;}
+.km-rule-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;}
+.km-rule-item{border-radius:8px;padding:14px 16px;text-align:center;}
+.km-rule-item .rv{font-size:22px;font-weight:700;margin-bottom:4px;}
+.km-rule-item .rl{font-size:11px;opacity:.8;}
+.ctkm-box{background:#fff8e1;border:1.5px solid #f9a825;border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
+.ctkm-stat .big{font-size:22px;font-weight:700;color:#7d4e00;}
+.ctkm-stat .sm{font-size:11px;color:#7d4e00;opacity:.8;}
+.ctkm-note{font-size:12px;color:#555;line-height:1.6;flex:1;min-width:180px;}
+.sc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.sc-card{background:white;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.sc-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.sc-tbl tr td{padding:3px 0;}
+.sc-tbl tr td:last-child{text-align:right;}
+.sc-tbl tr:not(:last-child){border-bottom:1px solid #eee;}
+.cpa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.cpa-card{background:white;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.08);text-align:center;}
+.cpa-card .cv{font-size:24px;font-weight:700;color:#1F4E79;margin:6px 0;}
+.cpa-card .cl{font-size:12px;color:#555;}
+.cpa-card .cs{font-size:11px;color:#888;margin-top:3px;}
+.ph-card{background:white;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:14px;}
+.ph-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.ph-badge{color:white;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;}
+.ph-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ph-tbl th{background:#f5f7fa;color:#444;font-weight:600;padding:7px 10px;border-bottom:2px solid #e0e4ea;text-align:left;}
+.ph-tbl td{padding:7px 10px;border-bottom:1px solid #f0f0f0;}
+.ph-tbl tr:last-child td{border-bottom:none;}
+.budget-box{background:white;border-radius:10px;padding:18px 24px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:24px;}
+.bbar{background:#eee;border-radius:6px;height:24px;margin:12px 0 6px;overflow:hidden;position:relative;display:flex;}
+.budget-row{display:flex;gap:28px;flex-wrap:wrap;margin-top:12px;}
+.bstat .bv{font-size:20px;font-weight:700;color:#1F4E79;}
+.bstat .bl{font-size:11px;color:#777;}
+.footer{text-align:center;color:#aaa;font-size:11px;margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>KẾ HOẠCH CRM SMS — THÁNG 5/2026 &nbsp;|&nbsp; V3 &nbsp;|&nbsp; FINAL</h1>
+    <div class="sub">A/B Test · Luồng A (F1 timing) + Luồng B (F2/F3 win-back) · 09/05–27/05/2026 · Budget 220M · V2 = V3</div>
+    <div class="meta">
+      <div class="mi"><div class="mv">357,700</div><div class="ml">Tổng gửi (5 phases)</div></div>
+      <div class="mi"><div class="mv">22,051</div><div class="ml">KH quay lại (Base)</div></div>
+      <div class="mi"><div class="mv">214.3M đ</div><div class="ml">Tổng chi phí</div></div>
+      <div class="mi"><div class="mv">220M đ</div><div class="ml">Budget (tăng từ 160M)</div></div>
+      <div class="mi"><div class="mv">2,366M đ</div><div class="ml">Net Revenue (Base)</div></div>
+      <div class="mi"><div class="mv">11.0x</div><div class="ml">ROI (Base)</div></div>
+    </div>
+  </div>
+
+  <div class="v2note">📌 V2 = V3 — File V2 đã được thay thế bởi V3. Phiên bản này là bản chính thức T5/2026. KM rule mới: 8-12W=KKM / 12-24W F2F3=KM20k / 24-52W=KM50k (test 30% → scale 70%).</div>
+
+  <div class="stitle">KM Tier Rule mới — T5/2026</div>
+  <div class="km-rule-box">
+    <div style="font-weight:700;color:#1F4E79;font-size:13px;margin-bottom:4px;">Phân tầng KM theo Recency — áp dụng từ T5/2026</div>
+    <div class="km-rule-grid">
+      <div class="km-rule-item" style="background:#e8f5e9;">
+        <div class="rv" style="color:#1a7a3c;">KKM</div>
+        <div style="font-weight:700;font-size:14px;color:#1a7a3c;">8W → 12W</div>
+        <div class="rl" style="color:#1a7a3c;">F3 khách trung thành<br>Không cần kích thích giá</div>
+      </div>
+      <div class="km-rule-item" style="background:#fff8e1;">
+        <div class="rv" style="color:#7d4e00;">KM 20k</div>
+        <div style="font-weight:700;font-size:14px;color:#7d4e00;">12W → 24W (F2, F3)</div>
+        <div class="rl" style="color:#7d4e00;">Vùng vàng win-back<br>Offer vừa đủ trigger quay lại</div>
+      </div>
+      <div class="km-rule-item" style="background:#fde8e8;">
+        <div class="rv" style="color:#7b0c0c;">KM 50k</div>
+        <div style="font-weight:700;font-size:14px;color:#7b0c0c;">24W → 52W (all F)</div>
+        <div class="rl" style="color:#7b0c0c;">Drift xa — cần offer mạnh<br>🔬 Test 30% → Scale 70% sau D+7 Pass</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">CTKM Insight — Redemption Rate 30%</div>
+  <div class="ctkm-box">
+    <div><div style="font-weight:700;color:#7d4e00;font-size:13px;margin-bottom:6px;">💡 Chỉ 30% KH KM tệp thực sự dùng voucher</div></div>
+    <div class="ctkm-stat"><div class="big">9,830</div><div class="sm">KH trong tệp KM</div></div>
+    <div style="color:#aaa;font-size:22px;">→</div>
+    <div class="ctkm-stat"><div class="big">2,949</div><div class="sm">KH dùng voucher (30%)</div></div>
+    <div style="color:#aaa;font-size:22px;">→</div>
+    <div class="ctkm-stat"><div class="big">107.0M đ</div><div class="sm">Chi phí KM thực tế</div></div>
+    <div class="ctkm-note">
+      <strong>KM 20k (F2 12-24W):</strong> 4,500 KH × 30% × 20k = <b>27.0M đ</b><br>
+      <strong>KM 50k (24W+):</strong> 5,330 KH × 30% × 50k = <b>79.95M đ</b><br>
+      <em>Budget 220M — tổng chi 214.3M — buffer 5.7M</em>
+    </div>
+  </div>
+
+  <div class="stitle">4 Kịch bản Dự báo</div>
+  <div class="sc-grid">
+        <div class="sc-card" style="border-top:4px solid #1a7a3c;background:#d4edda;">
+            <div style="font-size:22px;margin-bottom:4px;">🚀</div>
+            <div style="font-weight:700;color:#1a7a3c;font-size:13px;margin-bottom:10px;">Khả quan (+30%)</div>
+            <div style="background:#dc3545;color:white;font-size:10px;padding:2px 6px;border-radius:4px;margin-bottom:6px;">⚠️ Cost vượt 220M budget</div>
+            <table class="sc-tbl">
+                <tr><td>KH quay lại</td><td><b>28,666</b></td></tr>
+                <tr><td>SMS cost</td><td>107.3M</td></tr>
+                <tr><td>KM cost (30%)</td><td>246.3M </td></tr>
+                <tr><td>Net Revenue</td><td><b style="color:#1a7a3c;">3,107M</b></td></tr>
+                <tr><td>ROI</td><td><b>12.6x</b></td></tr>
+                <tr><td>CPA/uplift KH</td><td>27,500đ</td></tr>
+            </table>
+        </div>
+        <div class="sc-card" style="border-top:4px solid #1F4E79;background:#dce8f5;">
+            <div style="font-size:22px;margin-bottom:4px;">🎯</div>
+            <div style="font-weight:700;color:#1F4E79;font-size:13px;margin-bottom:10px;">Base Plan</div>
+            
+            <table class="sc-tbl">
+                <tr><td>KH quay lại</td><td><b>22,051</b></td></tr>
+                <tr><td>SMS cost</td><td>107.3M</td></tr>
+                <tr><td>KM cost (30%)</td><td>214.3M</td></tr>
+                <tr><td>Net Revenue</td><td><b style="color:#1F4E79;">2,366M</b></td></tr>
+                <tr><td>ROI</td><td><b>11.0x</b></td></tr>
+                <tr><td>CPA/uplift KH</td><td>31,043đ</td></tr>
+            </table>
+        </div>
+        <div class="sc-card" style="border-top:4px solid #ffc107;background:#fff3cd;">
+            <div style="font-size:22px;margin-bottom:4px;">⚠️</div>
+            <div style="font-weight:700;color:#7d4e00;font-size:13px;margin-bottom:10px;">Bi quan (−25%)</div>
+            
+            <table class="sc-tbl">
+                <tr><td>KH quay lại</td><td><b>16,538</b></td></tr>
+                <tr><td>SMS cost</td><td>107.3M</td></tr>
+                <tr><td>KM cost (30%)</td><td>187.5M</td></tr>
+                <tr><td>Net Revenue</td><td><b style="color:#7d4e00;">1,747M</b></td></tr>
+                <tr><td>ROI</td><td><b>9.3x</b></td></tr>
+                <tr><td>CPA/uplift KH</td><td>36,200đ</td></tr>
+            </table>
+        </div>
+        <div class="sc-card" style="border-top:4px solid #dc3545;background:#fde8e8;">
+            <div style="font-size:22px;margin-bottom:4px;">🔴</div>
+            <div style="font-weight:700;color:#7b0c0c;font-size:13px;margin-bottom:10px;">Thảm họa (−50%)</div>
+            
+            <table class="sc-tbl">
+                <tr><td>KH quay lại</td><td><b>11,026</b></td></tr>
+                <tr><td>SMS cost</td><td>107.3M</td></tr>
+                <tr><td>KM cost (30%)</td><td>160.8M</td></tr>
+                <tr><td>Net Revenue</td><td><b style="color:#7b0c0c;">1,129M</b></td></tr>
+                <tr><td>ROI</td><td><b>7.0x</b></td></tr>
+                <tr><td>CPA/uplift KH</td><td>46,600đ</td></tr>
+            </table>
+        </div></div>
+
+  <div class="stitle">CPA theo tầng KM</div>
+  <div class="cpa-grid">
+    <div class="cpa-card">
+      <div class="cl">💬 KKM — F1 Timing/WE/WD + F3 8-12W</div>
+      <div class="cv">18,172đ</div>
+      <div class="cs">CPA / KH uplift — chỉ SMS cost<br>12,221 KH | 69.5M SMS</div>
+    </div>
+    <div class="cpa-card">
+      <div class="cl">🟡 KM 20k — F2 12-24W</div>
+      <div class="cv">29,830đ</div>
+      <div class="cs">SMS + KM 20k / KH uplift<br>4,500 KH | 42.0M total</div>
+    </div>
+    <div class="cpa-card">
+      <div class="cl">🔴 KM 50k — F1Cold + F2 24-48W + F2 48W+</div>
+      <div class="cv">61,600đ</div>
+      <div class="cs">SMS + KM 50k / KH uplift<br>5,330 KH | Test 30% → Scale 70%</div>
+    </div>
+  </div>
+  <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:10px 16px;border-radius:6px;margin-bottom:24px;font-size:12px;color:#7d4e00;">
+    ⚠️ <strong>Lưu ý kịch bản Khả quan (+30%):</strong> KM cost ước tính ~246M, vượt budget 220M. Nếu xảy ra, cần request thêm ~26M hoặc cắt bớt scale 70% phase sau.
+  </div>
+
+  <div class="stitle">Chi tiết theo Phase — Test/Scale Split KM50k</div>
+  
+        <div class="ph-card">
+            <div class="ph-hdr" style="border-left:5px solid #1F4E79;">
+                <span class="ph-badge" style="background:#1F4E79;">P1</span>
+                <span style="font-weight:700;color:#1F4E79;font-size:14px;">09/05 (T7)</span>
+                <span style="color:#555;font-size:12px;margin-left:8px;">Launch: F2 12-24W full + F2 24-48W TEST 30% + F3 8-12W</span>
+                <div style="margin-left:auto;display:flex;gap:12px;font-size:12px;">
+                    <span style="color:#1F4E79;font-weight:600;">📨 73,150</span>
+                    <span style="color:#1a7a3c;font-weight:600;">👤 5,670 KH</span>
+                    <span style="color:#595959;">SMS 22.0M</span>
+                    <span style="color:#7b0c0c;font-weight:600;">KM 33.1M</span>
+                </div>
+            </div>
+            <table class="ph-tbl">
+                <thead><tr>
+                    <th>Tệp</th><th style="text-align:right;">Sends</th><th style="text-align:right;">KH về</th>
+                    <th style="text-align:right;">RR%</th><th style="text-align:right;">SMS Cost</th>
+                    <th style="text-align:center;">KM Tier</th><th>Content win</th>
+                </tr></thead>
+                <tbody><tr style="background:white;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 12-24W KM20k (Full scale)</td>
+            <td style="text-align:right;">50,000</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">4,500</td>
+            <td style="text-align:right;">9.0%</td>
+            <td style="text-align:right;">15.0M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 20k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">SMS cá nhân hóa + DV yêu thích + KM 20k</td>
+        </tr><tr style="background:#fff8e1;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 24-48W KM50k 🔴 TEST 30% (18.3k)</td>
+            <td style="text-align:right;">18,300</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">1,464</td>
+            <td style="text-align:right;">8.0%</td>
+            <td style="text-align:right;">5.5M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">[giá-50k]đ cụ thể, Combo Cắt+Gội, HSD 31/05</td>
+        </tr><tr style="background:white;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F3 Chain3+ 8-12W KKM (4.85k)</td>
+            <td style="text-align:right;">4,850</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">873</td>
+            <td style="text-align:right;">18.0%</td>
+            <td style="text-align:right;">1.5M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">KH ruột + ghế VIP — không cần KM</td>
+        </tr></tbody>
+            </table>
+        </div>
+        <div class="ph-card">
+            <div class="ph-hdr" style="border-left:5px solid #2e75b6;">
+                <span class="ph-badge" style="background:#2e75b6;">P2</span>
+                <span style="font-weight:700;color:#2e75b6;font-size:14px;">13/05 (T4)</span>
+                <span style="color:#555;font-size:12px;margin-left:8px;">F1 Luồng A: Timing Best + Weekend</span>
+                <div style="margin-left:auto;display:flex;gap:12px;font-size:12px;">
+                    <span style="color:#1F4E79;font-weight:600;">📨 76,500</span>
+                    <span style="color:#1a7a3c;font-weight:600;">👤 3,525 KH</span>
+                    <span style="color:#595959;">SMS 23.0M</span>
+                    <span style="color:#7b0c0c;font-weight:600;">KM 0M</span>
+                </div>
+            </div>
+            <table class="ph-tbl">
+                <thead><tr>
+                    <th>Tệp</th><th style="text-align:right;">Sends</th><th style="text-align:right;">KH về</th>
+                    <th style="text-align:right;">RR%</th><th style="text-align:right;">SMS Cost</th>
+                    <th style="text-align:center;">KM Tier</th><th>Content win</th>
+                </tr></thead>
+                <tbody><tr style="background:white;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Timing Best KKM (48.5k)</td>
+            <td style="text-align:right;">48,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">2,668</td>
+            <td style="text-align:right;">5.5%</td>
+            <td style="text-align:right;">14.6M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Slot giờ vàng cá nhân hóa + micro-deadline 30p</td>
+        </tr><tr style="background:white;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Weekend KKM (28k)</td>
+            <td style="text-align:right;">28,000</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">1,260</td>
+            <td style="text-align:right;">4.5%</td>
+            <td style="text-align:right;">8.4M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Hook 'đón tuần mới' + slot T7/CN</td>
+        </tr></tbody>
+            </table>
+        </div>
+        <div class="ph-card">
+            <div class="ph-hdr" style="border-left:5px solid #375623;">
+                <span class="ph-badge" style="background:#375623;">P3</span>
+                <span style="font-weight:700;color:#375623;font-size:14px;">16/05 (T6)</span>
+                <span style="color:#555;font-size:12px;margin-left:8px;">Scale KM50k 70% + F1 Cold Test 30% + F1 Weekday</span>
+                <div style="margin-left:auto;display:flex;gap:12px;font-size:12px;">
+                    <span style="color:#1F4E79;font-weight:600;">📨 94,200</span>
+                    <span style="color:#1a7a3c;font-weight:600;">👤 5,626 KH</span>
+                    <span style="color:#595959;">SMS 28.3M</span>
+                    <span style="color:#7b0c0c;font-weight:600;">KM 55.5M</span>
+                </div>
+            </div>
+            <table class="ph-tbl">
+                <thead><tr>
+                    <th>Tệp</th><th style="text-align:right;">Sends</th><th style="text-align:right;">KH về</th>
+                    <th style="text-align:right;">RR%</th><th style="text-align:right;">SMS Cost</th>
+                    <th style="text-align:center;">KM Tier</th><th>Content win</th>
+                </tr></thead>
+                <tbody><tr style="background:#e8f5e9;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 24-48W KM50k 🔴 SCALE 70% (42.7k)</td>
+            <td style="text-align:right;">42,700</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">3,416</td>
+            <td style="text-align:right;">8.0%</td>
+            <td style="text-align:right;">12.8M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Scale nếu P1 D+7 Pass — cùng content</td>
+        </tr><tr style="background:#fff8e1;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Cold 24-36W KM50k 🔴 TEST 30% (3k)</td>
+            <td style="text-align:right;">3,000</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">90</td>
+            <td style="text-align:right;">3.0%</td>
+            <td style="text-align:right;">0.9M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">'Lâu rồi' trigger + KM 50k + HSD scarcity</td>
+        </tr><tr style="background:white;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Weekday KKM (48.5k)</td>
+            <td style="text-align:right;">48,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">1,940</td>
+            <td style="text-align:right;">4.0%</td>
+            <td style="text-align:right;">14.6M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">'Ít đông ngày thường' + slot trống</td>
+        </tr></tbody>
+            </table>
+        </div>
+        <div class="ph-card">
+            <div class="ph-hdr" style="border-left:5px solid #843C0C;">
+                <span class="ph-badge" style="background:#843C0C;">P4</span>
+                <span style="font-weight:700;color:#843C0C;font-size:14px;">21/05 (T5)</span>
+                <span style="color:#555;font-size:12px;margin-left:8px;">F1 TB refresh + F2 12-24W top-up + F3 + F1 Cold Scale</span>
+                <div style="margin-left:auto;display:flex;gap:12px;font-size:12px;">
+                    <span style="color:#1F4E79;font-weight:600;">📨 72,850</span>
+                    <span style="color:#1a7a3c;font-weight:600;">👤 5,078 KH</span>
+                    <span style="color:#595959;">SMS 21.9M</span>
+                    <span style="color:#7b0c0c;font-weight:600;">KM 15.8M</span>
+                </div>
+            </div>
+            <table class="ph-tbl">
+                <thead><tr>
+                    <th>Tệp</th><th style="text-align:right;">Sends</th><th style="text-align:right;">KH về</th>
+                    <th style="text-align:right;">RR%</th><th style="text-align:right;">SMS Cost</th>
+                    <th style="text-align:center;">KM Tier</th><th>Content win</th>
+                </tr></thead>
+                <tbody><tr style="background:white;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Timing Best fresh (48.5k)</td>
+            <td style="text-align:right;">48,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">2,668</td>
+            <td style="text-align:right;">5.5%</td>
+            <td style="text-align:right;">14.6M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Lần 2 — audience mới / chưa convert P2</td>
+        </tr><tr style="background:white;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 12-24W top-up KM20k (12.5k)</td>
+            <td style="text-align:right;">12,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">1,125</td>
+            <td style="text-align:right;">9.0%</td>
+            <td style="text-align:right;">3.8M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 20k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">25% top audience chưa convert P1</td>
+        </tr><tr style="background:white;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F3 8-12W fresh (4.85k)</td>
+            <td style="text-align:right;">4,850</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">873</td>
+            <td style="text-align:right;">18.0%</td>
+            <td style="text-align:right;">1.5M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Dedup sạch — không bắn KH đã về P1</td>
+        </tr><tr style="background:#e8f5e9;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Cold KM50k 🔴 SCALE 70% (7k)</td>
+            <td style="text-align:right;">7,000</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">210</td>
+            <td style="text-align:right;">3.0%</td>
+            <td style="text-align:right;">2.1M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Scale nếu P3 D+7 Pass</td>
+        </tr></tbody>
+            </table>
+        </div>
+        <div class="ph-card">
+            <div class="ph-hdr" style="border-left:5px solid #404040;">
+                <span class="ph-badge" style="background:#404040;">P5</span>
+                <span style="font-weight:700;color:#404040;font-size:14px;">27/05 (T4) 🏁</span>
+                <span style="color:#555;font-size:12px;margin-left:8px;">F1 Weekday refresh + F2 48W+ Test + Scale</span>
+                <div style="margin-left:auto;display:flex;gap:12px;font-size:12px;">
+                    <span style="color:#1F4E79;font-weight:600;">📨 53,500</span>
+                    <span style="color:#1a7a3c;font-weight:600;">👤 2,096 KH</span>
+                    <span style="color:#595959;">SMS 16.1M</span>
+                    <span style="color:#7b0c0c;font-weight:600;">KM 2.25M</span>
+                </div>
+            </div>
+            <table class="ph-tbl">
+                <thead><tr>
+                    <th>Tệp</th><th style="text-align:right;">Sends</th><th style="text-align:right;">KH về</th>
+                    <th style="text-align:right;">RR%</th><th style="text-align:right;">SMS Cost</th>
+                    <th style="text-align:center;">KM Tier</th><th>Content win</th>
+                </tr></thead>
+                <tbody><tr style="background:white;">
+            <td><span style="color:#1F4E79;font-weight:700;">A</span> F1 Weekday fresh (48.5k)</td>
+            <td style="text-align:right;">48,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">1,940</td>
+            <td style="text-align:right;">4.0%</td>
+            <td style="text-align:right;">14.6M</td>
+            <td style="text-align:center;"><span style="color:#aaa;font-size:11px;">KKM</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">Lần 2 cuối tháng — reminder 'slot cuối'</td>
+        </tr><tr style="background:#fff8e1;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 48W+ KM50k 🔴 TEST 30% (1.5k)</td>
+            <td style="text-align:right;">1,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">45</td>
+            <td style="text-align:right;">3.0%</td>
+            <td style="text-align:right;">0.5M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">'Nhớ [Tên] quá' + KM 50k + scarcity</td>
+        </tr><tr style="background:#e8f5e9;">
+            <td><span style="color:#375623;font-weight:700;">B</span> F2 48W+ KM50k 🔴 SCALE 70% (3.5k)</td>
+            <td style="text-align:right;">3,500</td>
+            <td style="text-align:right;color:#1a7a3c;font-weight:600;">105</td>
+            <td style="text-align:right;">3.0%</td>
+            <td style="text-align:right;">1.1M</td>
+            <td style="text-align:center;"><span style="background:#7b0c0c;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">KM 50k</span></td>
+            <td style="font-size:11px;color:#555;font-style:italic;">→ Scale T6 nếu Pass, chạy cuối T5 nếu D+3 tốt</td>
+        </tr></tbody>
+            </table>
+        </div>
+
+  <div class="stitle">Ngân sách — Budget 220M</div>
+  <div class="budget-box">
+    <div style="font-weight:700;color:#1F4E79;font-size:14px;">Tổng chi: 214.3M / 220M ngân sách (97%) — Buffer còn 5.7M</div>
+    <div class="bbar">
+      <span style="background:#2e75b6;width:50.1%;height:100%;display:block;" title="SMS 107.3M"></span>
+      <span style="background:#7b0c0c;width:48.7%;height:100%;display:block;" title="KM 107.0M"></span>
+    </div>
+    <div style="display:flex;gap:20px;font-size:12px;margin-top:6px;flex-wrap:wrap;">
+      <span><span style="display:inline-block;width:12px;height:12px;background:#2e75b6;border-radius:3px;margin-right:4px;vertical-align:middle;"></span>SMS: 107.3M (50%)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;background:#7b0c0c;border-radius:3px;margin-right:4px;vertical-align:middle;"></span>KM Voucher: 107.0M (50%)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;background:#ddd;border-radius:3px;margin-right:4px;vertical-align:middle;"></span>Buffer: 5.7M (2.6%)</span>
+    </div>
+    <div class="budget-row">
+      <div class="bstat"><div class="bv">107.3M</div><div class="bl">Chi phí SMS (300đ × 357,700)</div></div>
+      <div class="bstat"><div class="bv">107.0M</div><div class="bl">Chi phí KM (CTKM 30% redemption)</div></div>
+      <div class="bstat"><div class="bv">214.3M</div><div class="bl">Tổng chi phí</div></div>
+      <div class="bstat"><div class="bv" style="color:#1a7a3c;">5.7M</div><div class="bl">Buffer còn lại / 220M</div></div>
+      <div class="bstat"><div class="bv">2,366M</div><div class="bl">Net Revenue (Base)</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    PLAN CRM T5/2026 V3 (= V2) · SMS 300đ/tin · CTKM 30% · Budget 220M · KM Rule: 8-12W=KKM / 12-24W F2F3=KM20k / 24-52W=KM50k · 09/05–27/05/2026
+  </div>
+</div>
+</body>
+</html>
